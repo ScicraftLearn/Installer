@@ -16,6 +16,8 @@ def download_recent_version_mods(temp_folder) -> str:
     with open(temp_folder + "recent_mods.zip", "wb") as file:
         file.write(response.content)
 
+    print("Downloaded mods")
+
     return temp_folder + "recent_mods.zip"
 
 
@@ -30,6 +32,8 @@ def download_alpha_release_mods(temp_folder) -> str:
 
     with open(temp_folder + "alpha_mods.zip", "wb") as file:
         file.write(response.content)
+
+    print("Downloaded mods")
 
     return temp_folder + "alpha_mods.zip"
 
@@ -46,5 +50,7 @@ def download_recent_version_fabric(temp_folder) -> str:
 
     with open(temp_folder + "fabric.jar", "wb") as file:
         file.write(response.content)
+
+    print("Downloaded fabric")
 
     return temp_folder + "fabric.jar"

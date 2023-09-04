@@ -16,6 +16,8 @@ def create_temporary_folder() -> str:
     if not os.path.exists(temp_folder):
         os.makedirs(temp_folder)
 
+    print("Created temporary folder")
+
     return temp_folder
 
 
@@ -26,6 +28,8 @@ def delete_temporary_folder(temp_folder) -> None:
 
     # Delete the temp folder
     shutil.rmtree(temp_folder)
+
+    print("Deleted temporary folder")
 
 
 def install_fabric(fabric_jar, minecraft_version) -> None:
@@ -40,6 +44,8 @@ def install_fabric(fabric_jar, minecraft_version) -> None:
     command = f'java -jar {fabric_jar} client -mcversion {minecraft_version}'
     os.system(command)
 
+    print("Installed fabric")
+
 
 def extract_zip(zip_file, temp_folder) -> list[str]:
     """
@@ -53,6 +59,8 @@ def extract_zip(zip_file, temp_folder) -> list[str]:
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_ref.extractall(temp_folder)
         extracted_files = zip_ref.namelist()
+
+    print("Extracted zip file")
 
     return extracted_files
 
@@ -78,6 +86,8 @@ def move_mods(mods, temp_folder):
     minecraft_mods_folder = os.path.join(os.getenv("APPDATA"), ".minecraft", "mods")
     move_files(mods, temp_folder, minecraft_mods_folder)
 
+    print("Moved mods")
+
 
 def move_maps(maps, temp_folder):
     """
@@ -88,3 +98,5 @@ def move_maps(maps, temp_folder):
 
     minecraft_saves_folder = os.path.join(os.getenv("APPDATA"), ".minecraft", "saves")
     move_files(maps, temp_folder, minecraft_saves_folder)
+
+    print("Moved maps")
