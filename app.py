@@ -17,7 +17,7 @@ def create_executable(version):
 
 
 if __name__ == '__main__':
-    v = "interface"
+    v = "alpha"
     try:
         create_executable(v)
         time.sleep(3)

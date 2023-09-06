@@ -51,6 +51,12 @@ def get_mods_folder() -> str:
     Returns the location of the mods folder
     :return: The location of the mods folder
     """
+
+    # check if mods folder exists
+    if not os.path.exists(os.path.join(os.getenv("APPDATA"), ".minecraft", "mods")):
+        # create mods folder
+        os.makedirs(os.path.join(os.getenv("APPDATA"), ".minecraft", "mods"))
+
     return os.path.join(os.getenv("APPDATA"), ".minecraft", "mods")
 
 
