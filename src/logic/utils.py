@@ -37,6 +37,19 @@ def get_dialogs() -> dict:
     return json.load(open(get_data_file_path("resources/dialog.json")))
 
 
+def get_dialog_language() -> str:
+    """
+    Returns the language for the dialogs based on the system language
+    :return: The language for the dialogs based on the system language
+    """
+
+    import locale
+    system_language = locale.getdefaultlocale()[0].split("_")[0]
+    if system_language == "nl":
+        return "dutch"
+    return "english"
+
+
 def get_logo(extension) -> str:
     """
     Returns the logo file as a string

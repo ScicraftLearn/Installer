@@ -3,30 +3,90 @@
     "title": "Minelabs installer"
   },
   "content": {
-    "mainWidget" : {
+    "mainWidget": {
       "title": "Minelabs installer",
-      "info": "Info Minelabs installer"
+      "info": {
+        "dutch": "Info over de Minelabs installer in het nederlands",
+        "english": "Info about the Minelabs installer in English"
+      }
     },
     "typeInstallationWidget": {
-      "pageInfoBoxTitle": "Type of installation:",
-      "extraInfoInstallation": "Extra info installation",
-      "infoDefaultInstallation": "This is a default installation",
-      "infoTeacherInstallation": "This is a teacher installation",
-      "infoAdvancedInstallation": "This is a advanced installation"
+      "pageInfoBoxTitle": {
+        "dutch": "Type van installatie:",
+        "english": "Type of installation:"
+      },
+      "extraInfoInstallation": {
+        "dutch": "Extra info over de installatie",
+        "english": "Extra info about the installation"
+      },
+      "infoDefaultInstallation": {
+        "dutch": "Dit is een standaard installatie",
+        "english": "This is a default installation"
+      },
+      "infoTeacherInstallation": {
+        "dutch": "Dit is een installatie voor leerkrachten",
+        "english": "This is a teacher installation"
+      },
+      "infoAdvancedInstallation": {
+        "dutch": "Dit is een geavanceerde installatie",
+        "english": "This is an advanced installation"
+      }
     },
     "customInstallationWidget": {
-      "pageInfoBoxTitle": "Choose components:",
-      "extraInfoInstallation": "Extra info installation",
-      "instructions": "Check the components you want to install and uncheck the components you don't want to install. Click Next to continue."
+      "pageInfoBoxTitle": {
+        "dutch": "Kiezen van componenten:",
+        "english": "Choose components:"
+      },
+      "extraInfoInstallation": {
+        "dutch": "Extra info over de installatie",
+        "english": "Extra info about the installation"
+      },
+      "instructions": {
+        "dutch": "Vink de componenten aan die je wil installeren en vink de componenten uit die je niet wil installeren. Klik op Volgende om verder te gaan.",
+        "english": "Check the components you want to install and uncheck the components you don't want to install. Click Next to continue."
+      }
     },
     "installationWidget": {
-      "pageInfoBoxTitle": "Installing components",
-      "extraInfoInstallation": "Extra info installation"
+      "pageInfoBoxTitle": {
+        "dutch": "Installeren van de componenten:",
+        "english": "Installing components:"
+      },
+      "extraInfoInstallation": {
+        "dutch": "Extra info over de installatie",
+        "english": "Extra info about the installation"
+      }
     },
     "finishWidget": {
-      "title": "Completing the Minelabs Setup Wizard",
-      "info_1": "Setup has finished installing the required Minelabs components on your computer.",
-      "info_2": "Click Finish to exit Setup Wizard."
+      "title": {
+        "dutch": "Voltooien van de Minelabs Setup Wizard",
+        "english": "Completing the Minelabs Setup Wizard"
+      },
+      "info_1": {
+        "dutch": "De Minelabs Setup Wizard heeft de vereiste Minelabs componenten op uw computer geïnstalleerd.",
+        "english": "Setup has finished installing the required Minelabs components on your computer."
+      },
+      "info_2": {
+        "dutch": "Klik op Voltooien om de Minelabs Setup Wizard af te sluiten.",
+        "english": "Click Finish to exit the Minelabs Setup Wizard."
+      }
+    }
+  },
+  "navigation": {
+    "back": {
+      "dutch": "Terug",
+      "english": "Back"
+    },
+    "next": {
+      "dutch": "Volgende",
+      "english": "Next"
+    },
+    "cancel": {
+      "dutch": "Annuleren",
+      "english": "Cancel"
+    },
+    "finish": {
+      "dutch": "Voltooien",
+      "english": "Finish"
     }
   }
 }

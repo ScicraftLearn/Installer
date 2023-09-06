@@ -2,6 +2,7 @@ import sys
 
 from PySide6.QtWidgets import QWidget
 
+import src.logic.utils as utils
 from src.representation.interface import Interface
 
 
@@ -97,6 +98,8 @@ class LogicInterface(QWidget):
         This method is used to enable or disable the buttons depending on the window index
         """
 
+        language = utils.get_dialog_language()
+
         self.ui.BackButton.setDisabled(True)
         if self.window_index == 1:
             self.ui.BackButton.setEnabled(True)
@@ -107,37 +110,45 @@ class LogicInterface(QWidget):
         elif self.window_index == 3:
             self.ui.BackButton.setVisible(False)
             self.ui.NextButton.setVisible(False)
-            self.ui.CancelButton.setText("Next")
+            self.ui.CancelButton.setText(utils.get_dialogs()["navigation"]["next"][language])
             self.ui.CancelButton.setDisabled(True)
 
         elif self.window_index == 4:
-            self.ui.CancelButton.setText("Finish")
+            self.ui.CancelButton.setText(utils.get_dialogs()["navigation"]["finish"][language])
 
     ############################## Type installation methods ##############################
 
     def select_default_installation(self):
+
+        language = utils.get_dialog_language()
+
         if self.ui.defaultBox.isChecked():
             self.disable_type_installation_buttons()
 
         self.ui.defaultBox.setChecked(True)
-        self.ui.set_text_installation_type_info('infoDefaultInstallation')
+        self.ui.set_text_installation_type_info('infoDefaultInstallation', language)
 
     def select_teacher_installation(self):
+
+        language = utils.get_dialog_language()
+
         if self.ui.teacherBox.isChecked():
             self.disable_type_installation_buttons()
 
         self.ui.teacherBox.setChecked(True)
-        self.ui.set_text_installation_type_info('infoTeacherInstallation')
+        self.ui.set_text_installation_type_info('infoTeacherInstallation', language)
 
     def select_advanced_installation(self):
+
+        language = utils.get_dialog_language()
+
         if self.ui.advancedBox.isChecked():
             self.disable_type_installation_buttons()
 
         self.ui.advancedBox.setChecked(True)
-        self.ui.set_text_installation_type_info('infoAdvancedInstallation')
+        self.ui.set_text_installation_type_info('infoAdvancedInstallation', language)
 
     def disable_type_installation_buttons(self):
         self.ui.defaultBox.setChecked(False)
         self.ui.teacherBox.setChecked(False)
         self.ui.advancedBox.setChecked(False)
-
