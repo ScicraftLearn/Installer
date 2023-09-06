@@ -1,0 +1,33 @@
+{
+  "mods": {
+    "minelabs": {
+      "alpha": "https://github.com/ScicraftLearn/Minelabs/releases/download/alpha-1.0.0/files.zip",
+      "latest": "https://minelabs.be/minelabs-content/mods.zip"
+    },
+    "dashboard-link": {
+      "alpha": "https://github.com/ScicraftLearn/Dashboard-Link/releases/download/v0.1.0/dashboard-link-1.0.0.jar",
+      "latest": "https://github.com/ScicraftLearn/Dashboard-Link/releases/download/v0.2.0/dashboard-link-0.2.0.jar"
+    }
+  },
+  "mod-extensions": {
+    "minelabs": ".zip",
+    "dashboard-link": ".jar"
+  },
+  "fabric-installer": {
+    "alpha": "https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.11.2/fabric-installer-0.11.2.jar",
+    "latest": "https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.11.2/fabric-installer-0.11.2.jar"
+  },
+  "maps": {
+    "demo-world": {
+        "alpha": "resources/maps/vAlpha/demo-world.zip",
+        "latest": "resources/maps/vLatest/demo-world.zip"
+    }
+  },
+  "minecraft-versions": {
+    "alpha": "1.19.2",
+    "latest": "1.19.4"
+  },
+  "images": {
+    "minelabs-logo": "resources/images/minelabs-logo.png"
+  }
+}

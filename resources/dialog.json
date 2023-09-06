@@ -1,0 +1,32 @@
+{
+  "window": {
+    "title": "Minelabs installer"
+  },
+  "content": {
+    "mainWidget" : {
+      "title": "Minelabs installer",
+      "info": "Info Minelabs installer"
+    },
+    "typeInstallationWidget": {
+      "pageInfoBoxTitle": "Type of installation:",
+      "extraInfoInstallation": "Extra info installation",
+      "infoDefaultInstallation": "This is a default installation",
+      "infoTeacherInstallation": "This is a teacher installation",
+      "infoAdvancedInstallation": "This is a advanced installation"
+    },
+    "customInstallationWidget": {
+      "pageInfoBoxTitle": "Choose components:",
+      "extraInfoInstallation": "Extra info installation",
+      "instructions": "Check the components you want to install and uncheck the components you don't want to install. Click Next to continue."
+    },
+    "installationWidget": {
+      "pageInfoBoxTitle": "Installing components",
+      "extraInfoInstallation": "Extra info installation"
+    },
+    "finishWidget": {
+      "title": "Completing the Minelabs Setup Wizard",
+      "info_1": "Setup has finished installing the required Minelabs components on your computer.",
+      "info_2": "Click Finish to exit Setup Wizard."
+    }
+  }
+}
