@@ -6,13 +6,25 @@ from src.representation.interface import Interface
 
 
 class LogicInterface(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, install_function, parent=None):
         super().__init__(parent)
         self.ui = Interface()
+
+        # Creates the interface layout
         self.ui.setupUi(self)
 
-        self.window_index = 0
+        self.install_function = install_function
 
+        # Variable to store the window index
+        self.window_index = 2
+
+        # Variables to store the information of the installation
+        self.mods_to_install = []
+        self.maps_to_install = []
+        self.install_fabric = True
+        self.version = "latest"
+
+        # Set up the interface
         self.setup_interface()
 
     ############################## Setup Methods ##############################

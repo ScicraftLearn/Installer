@@ -155,6 +155,25 @@ def get_minecraft_version(version) -> str:
     return config["minecraft-versions"][version]
 
 
+def get_tree_structure_config() -> dict:
+    """
+    Returns the tree structure config file as a dictionary
+    :return: The tree structure config file as a dictionary
+    """
+    config = get_config()
+    versions = config["versions"]
+
+    structure = {}
+
+    for version in versions:
+        structure[version] = {}
+        structure[version]["mods"] = list(get_all_mods(version).keys())
+        structure[version]["maps"] = list(get_all_maps(version).keys())
+        structure[version]["fabric-installer"] = []
+
+    return structure
+
+
 def create_temporary_folder() -> str:
     """
     Creates a temporary folder in the same directory as the installer

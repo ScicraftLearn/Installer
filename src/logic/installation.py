@@ -3,7 +3,7 @@ import src.logic.install as installer
 import src.logic.utils as utils
 
 
-def run_installer(version, selected_mods, selected_maps):
+def run_installer(version, selected_mods, selected_maps, install_fabric=True):
     print(f"Installing {version} version...")
 
     # Creates a temporary folder and returns the path
@@ -23,17 +23,18 @@ def run_installer(version, selected_mods, selected_maps):
         temp_folder
     )
 
-    # Downloads the fabric installer and returns the path to the zip file
-    fabric_installer = downloader.download_fabric_installer(version, temp_folder)
+    if install_fabric:
+        # Downloads the fabric installer and returns the path to the zip file
+        fabric_installer = downloader.download_fabric_installer(version, temp_folder)
+
+        # installs fabric
+        installer.install_fabric(fabric_installer, version)
 
     # installs the mods
     installer.install_mods(mods, temp_folder)
 
     # installs the maps
     installer.install_maps(maps, temp_folder)
-
-    # installs fabric
-    installer.install_fabric(fabric_installer, version)
 
     # deletes the temporary folder
     utils.delete_temporary_folder(temp_folder)

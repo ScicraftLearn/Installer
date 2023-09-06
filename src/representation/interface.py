@@ -1,5 +1,6 @@
-from PySide6.QtCore import (QCoreApplication)
+from PySide6.QtCore import (QCoreApplication, Qt)
 from PySide6.QtGui import (QPixmap, QIcon)
+from PySide6.QtWidgets import QTreeWidgetItem
 
 import src.logic.utils as utils
 from src.representation.ui_form import Ui_Installer
@@ -37,8 +38,10 @@ class Interface(Ui_Installer):
         # Sets the logos
         self.set_all_logos()
 
-    def set_all_logos(self):
+        # Sets the tree widget items
+        self.setup_tree_widget_items()
 
+    def set_all_logos(self):
         self.imageBox.setPixmap(QPixmap(utils.get_logo('png')))
         self.logo.setPixmap(QPixmap(utils.get_logo('png')))
         self.logo_2.setPixmap(QPixmap(utils.get_logo('png')))
@@ -127,6 +130,104 @@ class Interface(Ui_Installer):
                                                               f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">{self.dialogs['content']['installationWidget']['pageInfoBoxTitle']}</span></p>\n"
                                                               f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    {self.dialogs['content']['installationWidget']['extraInfoInstallation']}</p></body></html>",
                                                               None))
+
+    def setup_tree_widget_items(self):
+        """
+        Creates the items of the tree widget based on the content of the config file
+        """
+        structure = utils.get_tree_structure_config()
+        self.componentBox.clear()
+        for version in structure:
+            version_item = QTreeWidgetItem(self.componentBox)
+            version_item.setText(0, QCoreApplication.translate("Installer", f"{version}-release", None))
+            version_item.setFlags(version_item.flags() | Qt.ItemIsUserCheckable)
+            version_item.setCheckState(0, Qt.Unchecked)
+
+            mods_item = QTreeWidgetItem(version_item)
+            mods_item.setText(0, QCoreApplication.translate("Installer", "mods", None))
+            mods_item.setFlags(mods_item.flags() | Qt.ItemIsUserCheckable)
+            mods_item.setCheckState(0, Qt.Unchecked)
+
+            maps_item = QTreeWidgetItem(version_item)
+            maps_item.setText(0, QCoreApplication.translate("Installer", "maps", None))
+            maps_item.setFlags(mods_item.flags() | Qt.ItemIsUserCheckable)
+            maps_item.setCheckState(0, Qt.Unchecked)
+
+            fabric = QTreeWidgetItem(version_item)
+            fabric.setText(0, QCoreApplication.translate("Installer", "fabric-installer", None))
+            fabric.setFlags(mods_item.flags() | Qt.ItemIsUserCheckable)
+            fabric.setCheckState(0, Qt.Unchecked)
+
+            for i, mod in enumerate(structure[version]["mods"]):
+                mod_item = QTreeWidgetItem(mods_item)
+                mod_item.setText(0, QCoreApplication.translate("Installer", f"{mod}", None))
+                mod_item.setFlags(mod_item.flags() | Qt.ItemIsUserCheckable)
+                mod_item.setCheckState(0, Qt.Unchecked)
+
+            for i, map in enumerate(structure[version]["maps"]):
+                map_item = QTreeWidgetItem(maps_item)
+                map_item.setText(0, QCoreApplication.translate("Installer", f"{map}", None))
+                map_item.setFlags(map_item.flags() | Qt.ItemIsUserCheckable)
+                map_item.setCheckState(0, Qt.Unchecked)
+
+        self.componentBox.itemChanged.connect(self.select_tree_structure)
+        self.componentBox.itemChanged.connect(self.remove_parent_check_if_no_checked_children)
+        self.componentBox.itemChanged.connect(self.check_parent_if_all_children_checked)
+        self.componentBox.itemChanged.connect(self.remove_other_version_checkboxes)
+
+    def select_tree_structure(self, item):
+        # Check or uncheck all child items when a parent item is checked or unchecked
+        state = item.checkState(0)
+
+        for i in range(item.childCount()):
+            item.child(i).setCheckState(0, state)
+
+    def remove_parent_check_if_no_checked_children(self, item):
+        if item.parent() is None:
+            return
+
+        parent = item.parent()
+        if parent.checkState(0) == Qt.Checked:
+            for i in range(parent.childCount()):
+                if parent.child(i).checkState(0) == Qt.Checked:
+                    return
+            parent.setCheckState(0, Qt.Unchecked)
+
+    def check_parent_if_all_children_checked(self, item):
+        if item.parent() is None:
+            return
+
+        parent = item.parent()
+        if parent.checkState(0) == Qt.Unchecked:
+            for i in range(parent.childCount()):
+                if parent.child(i).checkState(0) == Qt.Unchecked:
+                    return
+            parent.setCheckState(0, Qt.Checked)
+
+    def remove_other_version_checkboxes(self, item):
+        """
+        This method is used to remove the check boxes of the other versions
+        :param item: The item that was checked
+        """
+
+        # search parent of item
+        parent = item
+        while parent is not None:
+            if parent.parent() is None:
+                break
+            parent = parent.parent()
+
+        self.componentBox.blockSignals(True)
+        for i in range(self.componentBox.topLevelItemCount()):
+            other_version = self.componentBox.topLevelItem(i)
+            if other_version is not parent:
+                for j in range(other_version.childCount()):
+                    child = other_version.child(j)
+                    for k in range(child.childCount()):
+                        child.child(k).setCheckState(0, Qt.Unchecked)
+                    child.setCheckState(0, Qt.Unchecked)
+                other_version.setCheckState(0, Qt.Unchecked)
+        self.componentBox.blockSignals(False)
 
     ############################## finish Widget ##############################
 

@@ -1,4 +1,5 @@
 {
+  "versions": ["alpha", "latest"],
   "mods": {
     "minelabs": {
       "alpha": "https://github.com/ScicraftLearn/Minelabs/releases/download/alpha-1.0.0/files.zip",
