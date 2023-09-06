@@ -16,7 +16,7 @@ class LogicInterface(QWidget):
         self.install_function = install_function
 
         # Variable to store the window index
-        self.window_index = 2
+        self.window_index = 0
 
         # Variables to store the information of the installation
         self.mods_to_install = []

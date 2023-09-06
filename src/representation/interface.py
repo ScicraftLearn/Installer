@@ -42,6 +42,9 @@ class Interface(Ui_Installer):
         self.setup_tree_widget_items()
 
     def set_all_logos(self):
+        """
+        This method is used to set the logos
+        """
         self.imageBox.setPixmap(QPixmap(utils.get_logo('png')))
         self.logo.setPixmap(QPixmap(utils.get_logo('png')))
         self.logo_2.setPixmap(QPixmap(utils.get_logo('png')))
@@ -138,51 +141,66 @@ class Interface(Ui_Installer):
         structure = utils.get_tree_structure_config()
         self.componentBox.clear()
         for version in structure:
+            # Create the version item
             version_item = QTreeWidgetItem(self.componentBox)
             version_item.setText(0, QCoreApplication.translate("Installer", f"{version}-release", None))
             version_item.setFlags(version_item.flags() | Qt.ItemIsUserCheckable)
             version_item.setCheckState(0, Qt.Unchecked)
 
+            # Creates the sub items
+            # sub item mods
             mods_item = QTreeWidgetItem(version_item)
             mods_item.setText(0, QCoreApplication.translate("Installer", "mods", None))
             mods_item.setFlags(mods_item.flags() | Qt.ItemIsUserCheckable)
             mods_item.setCheckState(0, Qt.Unchecked)
 
+            # sub item maps
             maps_item = QTreeWidgetItem(version_item)
             maps_item.setText(0, QCoreApplication.translate("Installer", "maps", None))
             maps_item.setFlags(mods_item.flags() | Qt.ItemIsUserCheckable)
             maps_item.setCheckState(0, Qt.Unchecked)
 
+            # sub item fabric
             fabric = QTreeWidgetItem(version_item)
             fabric.setText(0, QCoreApplication.translate("Installer", "fabric-installer", None))
             fabric.setFlags(mods_item.flags() | Qt.ItemIsUserCheckable)
             fabric.setCheckState(0, Qt.Unchecked)
 
+            # Adds mods to the mods item
             for i, mod in enumerate(structure[version]["mods"]):
                 mod_item = QTreeWidgetItem(mods_item)
                 mod_item.setText(0, QCoreApplication.translate("Installer", f"{mod}", None))
                 mod_item.setFlags(mod_item.flags() | Qt.ItemIsUserCheckable)
                 mod_item.setCheckState(0, Qt.Unchecked)
 
+            # Adds maps to the maps item
             for i, map in enumerate(structure[version]["maps"]):
                 map_item = QTreeWidgetItem(maps_item)
                 map_item.setText(0, QCoreApplication.translate("Installer", f"{map}", None))
                 map_item.setFlags(map_item.flags() | Qt.ItemIsUserCheckable)
                 map_item.setCheckState(0, Qt.Unchecked)
 
+        # Connects the itemChanged signal to the methods, for handling the checkboxes
         self.componentBox.itemChanged.connect(self.select_tree_structure)
         self.componentBox.itemChanged.connect(self.remove_parent_check_if_no_checked_children)
         self.componentBox.itemChanged.connect(self.check_parent_if_all_children_checked)
         self.componentBox.itemChanged.connect(self.remove_other_version_checkboxes)
 
-    def select_tree_structure(self, item):
-        # Check or uncheck all child items when a parent item is checked or unchecked
+    @staticmethod
+    def select_tree_structure(item):
+        """
+        Check or uncheck all child items when a parent item is checked or unchecked
+        """
         state = item.checkState(0)
 
         for i in range(item.childCount()):
             item.child(i).setCheckState(0, state)
 
-    def remove_parent_check_if_no_checked_children(self, item):
+    @staticmethod
+    def remove_parent_check_if_no_checked_children(item):
+        """
+        This method is used to remove the check of the parent if no children are checked, if so the parent will be unchecked
+        """
         if item.parent() is None:
             return
 
@@ -193,7 +211,11 @@ class Interface(Ui_Installer):
                     return
             parent.setCheckState(0, Qt.Unchecked)
 
-    def check_parent_if_all_children_checked(self, item):
+    @staticmethod
+    def check_parent_if_all_children_checked(item):
+        """
+        This method is used to check the parent if all the children are checked, if so the parent will be checked
+        """
         if item.parent() is None:
             return
 
