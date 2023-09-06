@@ -16,7 +16,7 @@ def get_data_file_path(filename):
         data_path = sys._MEIPASS
     else:
         # Running as a regular Python script.
-        data_path = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.getcwd()
 
     return os.path.join(data_path, filename)
 
@@ -27,6 +27,23 @@ def get_config() -> dict:
     :return: The config file as a dictionary
     """
     return json.load(open(get_data_file_path("resources/config.json")))
+
+
+def get_dialogs() -> dict:
+    """
+    Returns the dialogs file as a dictionary
+    :return: The dialogs file as a dictionary
+    """
+    return json.load(open(get_data_file_path("resources/dialog.json")))
+
+
+def get_logo(extension) -> str:
+    """
+    Returns the logo file as a string
+    :param extension: The extension of the logo file
+    :return: The logo file as a string
+    """
+    return get_data_file_path(f"resources/images/minelabs-logo.{extension}")
 
 
 def get_mods_folder() -> str:

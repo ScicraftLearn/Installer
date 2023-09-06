@@ -1,5 +1,5 @@
 import src.logic.download as downloader
-import src.logic.installer as installer
+import src.logic.install as installer
 import src.logic.utils as utils
 
 

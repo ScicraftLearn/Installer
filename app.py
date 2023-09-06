@@ -1,8 +1,8 @@
 import time
 
-from src.logic.vAlpha import *
-from src.logic.vInstallerUI import *
-from src.logic.vLatest import *
+from src.logic.releases.vAlpha import *
+from src.logic.releases.vInstallerUI import *
+from src.logic.releases.vLatest import *
 
 
 def create_executable(version):
@@ -17,7 +17,7 @@ def create_executable(version):
 
 
 if __name__ == '__main__':
-    v = "alpha"
+    v = "interface"
     try:
         create_executable(v)
         time.sleep(3)
