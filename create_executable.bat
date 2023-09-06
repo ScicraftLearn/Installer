@@ -10,13 +10,26 @@ if "%~1"=="" (
 set input_arg=%~1
 call ./venv/Scripts/activate
 
-REM Perform if statements based on the input argument
+REM Common PyInstaller options
+set common_options=--onefile app.py --icon=resources/images/minelabs-logo.ico --add-data "resources/*.json;resources"
+
+REM Function to build a PyInstaller executable
+REM TODO: the map_data variable can be removed after the maps are accessible from the internet
+:build_executable
 if "%input_arg%"=="alpha" (
-    echo You chose option 1.
+    set executable_name=MineLabs-Alpha
+    set map_data=--add-data resources/maps/vAlpha/*.zip;resources/maps/vAlpha\
 ) else if "%input_arg%"=="latest" (
-    echo You chose option 2.
+    set executable_name=MineLabs-Latest
+    set map_data=--add-data resources/maps/vLatest/*.zip;resources/maps/vLatest\
 ) else if "%input_arg%"=="interface" (
-    echo You chose option 3.
+    set executable_name=MineLabs-Interface
+    set map_data=--add-data resources/maps/vAlpha/*.zip;resources/maps/vAlpha\ --add-data resources/maps/vLatest/*.zip;resources/maps/vLatest\
 ) else (
     echo Invalid option: %input_arg%
+    goto :eof
 )
+
+call py -m PyInstaller %common_options% --name "%executable_name%" %map_data%
+
+:end

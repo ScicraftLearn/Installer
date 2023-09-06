@@ -11,16 +11,13 @@ def get_data_file_path(filename):
     :param filename: The name of the file
     :return: The path to the file
     """
-
-    # Determine the path to the bundled data file
     if getattr(sys, 'frozen', False):
-        # Running as a PyInstaller executable
-        data_path = sys._MEIPASS  # This points to the extraction directory
+        # Running as a PyInstaller executable.
+        data_path = sys._MEIPASS
     else:
-        # Running as a regular Python script
+        # Running as a regular Python script.
         data_path = os.path.dirname(os.path.abspath(__file__))
 
-    # Construct the full path to the data file
     return os.path.join(data_path, filename)
 
 
@@ -29,7 +26,7 @@ def get_config() -> dict:
     Returns the config file as a dictionary
     :return: The config file as a dictionary
     """
-    return json.load(open('resources/config.json'))
+    return json.load(open(get_data_file_path("resources/config.json")))
 
 
 def get_mods_folder() -> str:

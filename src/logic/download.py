@@ -72,7 +72,7 @@ def download_map(map, location, temp_folder) -> str:
     path = os.path.dirname(os.path.realpath(__file__)).replace("src\\logic", location)
     world = location.split("/")[-1]
     if not os.path.exists(f"{temp_folder}{world}"):
-        shutil.copy(path, f"{temp_folder}{world}")
+        shutil.copy(utils.get_data_file_path(path), f"{temp_folder}{world}")
     path = f"{temp_folder}{world}"
     # remove till here
 
