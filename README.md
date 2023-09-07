@@ -97,7 +97,7 @@ Before creating an executable from the script version, you must first change the
 - generate.py
     - In the main function there is a variable "r_version", chance this to the correct version.
 
-After this you can create an executable from the script version.
+After this you can create an executable for the script version.
 
 ## Adding new content to the installer
 
