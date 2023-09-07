@@ -1,4 +1,5 @@
 import sys
+import time
 
 from PySide6.QtWidgets import QApplication
 
@@ -11,3 +12,13 @@ def interface_version():
     minelabs_installer = LogicInterface(run_installer)
     minelabs_installer.show()
     sys.exit(app.exec())
+
+
+if __name__ == '__main__':
+    try:
+        interface_version()
+        time.sleep(3)
+    except Exception as e:
+        print(e)
+        time.sleep(15)
+

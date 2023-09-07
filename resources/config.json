@@ -1,5 +1,35 @@
 {
   "versions": ["alpha", "latest"],
+  "installer-settings": {
+    "script_version": {
+      "alpha": {
+        "version": "alpha",
+        "mods": ["minelabs", "dashboard-link"],
+        "maps": ["demo-world"],
+        "fabric": true
+      },
+      "latest": {
+        "version": "latest",
+        "mods": ["minelabs", "dashboard-link"],
+        "maps": ["demo-world"],
+        "fabric": true
+      }
+    },
+    "interface_version": {
+      "default": {
+        "version": "latest",
+        "mods": ["minelabs", "dashboard-link"],
+        "maps": ["demo-world"],
+        "fabric": true
+      },
+      "teacher": {
+        "version": "latest",
+        "mods": ["minelabs"],
+        "maps": ["demo-world"],
+        "fabric": true
+      }
+    }
+  },
   "mods": {
     "minelabs": {
       "alpha": "https://github.com/ScicraftLearn/Minelabs/releases/download/alpha-1.0.0/files.zip",

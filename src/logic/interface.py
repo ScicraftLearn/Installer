@@ -220,19 +220,24 @@ class LogicInterface(QWidget):
         return None
 
     def get_default_installation_components(self):
+        config = utils.get_config()
+        settings = config["installer-settings"]["interface_version"]['default']
         return {
-            "version": "latest",
-            "mods": ["minelabs", "dashboard-link"],
-            "maps": ["demo-world"],
-            "install_fabric": True
+            "version": settings["version"],
+            "mods": settings["mods"],
+            "maps": settings["maps"],
+            "install_fabric": settings["fabric"]
         }
 
     def get_teacher_installation_components(self):
+        config = utils.get_config()
+        settings = config["installer-settings"]["interface_version"]['teacher']
+
         return {
-            "version": "latest",
-            "mods": ["minelabs"],
-            "maps": ["demo-world"],
-            "install_fabric": True
+            "version": settings["version"],
+            "mods": settings["mods"],
+            "maps": settings["maps"],
+            "install_fabric": settings["fabric"]
         }
 
     def get_advanced_installation_components(self):

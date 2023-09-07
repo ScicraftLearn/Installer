@@ -1,7 +1,9 @@
 import os
 import shutil
+from urllib.parse import urlparse
 
 import requests
+
 import src.logic.utils as utils
 
 
@@ -17,14 +19,20 @@ def download_mod(mod, location, temp_folder) -> str:
     """
 
     response = requests.get(location)
-    extension = utils.get_mod_extension(mod)
 
-    path = f"{temp_folder}{mod}{extension}"
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        # Extract the file name from the URL
+        parsed_url = urlparse(location)
+        file_name = parsed_url.path.split('/')[-1]
+        path = f"{temp_folder}{file_name}"
+        # Save the file with the extracted name
+        with open(path, 'wb') as file:
+            file.write(response.content)
 
-    with open(path, "wb") as file:
-        file.write(response.content)
+        return path
 
-    return path
+    return None
 
 
 def download_mods(mods, version, temp_folder) -> dict:
@@ -41,7 +49,9 @@ def download_mods(mods, version, temp_folder) -> dict:
 
     for mod in all_mods:
         if mod in mods:
-            downloaded_mods[mod] = download_mod(mod, all_mods[mod], temp_folder)
+            m = download_mod(mod, all_mods[mod], temp_folder)
+            if m is not None:
+                downloaded_mods[mod] = m
 
     return downloaded_mods
 

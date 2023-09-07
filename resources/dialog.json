@@ -1,13 +1,13 @@
 {
   "window": {
-    "title": "Minelabs installer"
+    "title": "Minelabs Setup"
   },
   "content": {
     "mainWidget": {
-      "title": "Minelabs installer",
+      "title": "Welcome to the Minelabs Setup Wizard",
       "info": {
-        "dutch": "Info over de Minelabs installer in het Nederlands",
-        "english": "Info about the Minelabs installer in English"
+        "dutch": "Deze wizard zal u helpen bij het installeren van de vereiste Minelabs componenten op uw computer. Klik op Volgende om verder te gaan of op Annuleren om de installatie af te breken.",
+        "english": "The Setup Wizard will install the required Minelabs components on your computer. Click Next to continue or Cancel to exit Setup."
       }
     },
     "typeInstallationWidget": {
@@ -16,20 +16,20 @@
         "english": "Type of installation:"
       },
       "extraInfoInstallation": {
-        "dutch": "Extra info over de installatie",
-        "english": "Extra info about the installation"
+        "dutch": "Kies een installatie type en klik op Volgende om verder te gaan.",
+        "english": "Choose a type of installation and click Next to continue."
       },
       "infoDefaultInstallation": {
-        "dutch": "Dit is een standaard installatie",
-        "english": "This is a default installation"
+        "dutch": "Dit installatie type zal de laatse versie van Minelabs, de demo wereld, de dashboard-link mod en fabric installeren.",
+        "english": "This installation type will install the latest version of Minelabs, the demo world, the dashboard-link mod and fabric."
       },
       "infoTeacherInstallation": {
-        "dutch": "Dit is een installatie voor leerkrachten",
-        "english": "This is a teacher installation"
+        "dutch": "Dit installatie type zal de laatse versie van Minelabs, de demo wereld en fabric installeren.",
+        "english": "This installation type will install the latest version of Minelabs, the demo world and fabric."
       },
       "infoAdvancedInstallation": {
-        "dutch": "Dit is een geavanceerde installatie",
-        "english": "This is an advanced installation"
+        "dutch": "Dit installatie type geeft u de mogelijkheid om zelf te kiezen welke versie en componenten u wilt installeren.",
+        "english": "This installation type gives you the possibility to choose which version and components you want to install"
       },
       "typeInstallations": {
         "default": {
@@ -56,11 +56,11 @@
         "english": "Choose components:"
       },
       "extraInfoInstallation": {
-        "dutch": "Extra info over de installatie",
-        "english": "Extra info about the installation"
+        "dutch": "Selecteer de componenten en klik op Volgende om de installatie te starten.",
+        "english": "Select the components and click Next to start the installation."
       },
       "instructions": {
-        "dutch": "Vink de componenten aan die je wil installeren en vink de componenten uit die je niet wil installeren. Klik op Volgende om verder te gaan.",
+        "dutch": "Vink de componenten aan die u wilt installeren en vink de componenten uit die u niet wilt installeren. Klik op Volgende om verder te gaan.",
         "english": "Check the components you want to install and uncheck the components you don't want to install. Click Next to continue."
       },
       "selectComponentsLabel": {
@@ -74,8 +74,8 @@
         "english": "Installing components:"
       },
       "extraInfoInstallation": {
-        "dutch": "Extra info over de installatie",
-        "english": "Extra info about the installation"
+        "dutch": "Wacht tot het installeren is voltooid en klik op Volgende om verder te gaan.",
+        "english": "Wait until the installation is finished and click Next to continue."
       }
     },
     "finishWidget": {
