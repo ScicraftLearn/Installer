@@ -199,8 +199,6 @@ def create_temporary_folder() -> str:
     :return: The path to the temporary folder
     """
 
-    print("Creating temporary folder...")
-
     # Get the temp folder location
     temp_folder = os.path.dirname(os.path.realpath(__file__)) + "\\temp\\"
 
@@ -217,7 +215,16 @@ def delete_temporary_folder(temp_folder) -> None:
     :param temp_folder: The path to the temporary folder
     """
 
-    print("Deleting temporary folder...")
-
     # Delete the temp folder
     shutil.rmtree(temp_folder)
+
+
+def print_progress(text, value):
+    progress_length = 20
+    filled_length = int(progress_length * value / 100)
+
+    progress_bar = "[" + "=" * filled_length + " " * (progress_length - filled_length) + "]"
+    text = ('{: <35}'.format(text))
+    formatted_text = f"{text} {progress_bar}  {value}%"
+
+    print(formatted_text)

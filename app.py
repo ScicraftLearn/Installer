@@ -20,7 +20,7 @@ if __name__ == '__main__':
     v = "interface"
     try:
         create_executable(v)
-        time.sleep(3)
+        time.sleep(1)
     except Exception as e:
         print(e)
         time.sleep(15)

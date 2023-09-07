@@ -6,6 +6,11 @@ import src.logic.utils as utils
 from src.representation.ui_form import Ui_Installer
 
 
+# ####################################################################################################### #
+# To generate the ui_form.py file run the following command in the terminal in the representation folder: #
+# pyside6-uic form.ui -o ui_form.py                                                                       #
+# ####################################################################################################### #
+
 class Interface(Ui_Installer):
 
     def __init__(self):
@@ -64,6 +69,8 @@ class Interface(Ui_Installer):
     def setup_text_type_installation_widget(self, language):
         self.set_text_info_box(language)
         self.set_text_installation_type_info('infoDefaultInstallation', language)
+        self.set_text_type_installation_boxes(language)
+        self.set_text_type_installation_label(language)
 
     def set_text_info_box(self, language):
         self.pageInfoBox.setHtml(QCoreApplication.translate("Installer",
@@ -74,8 +81,10 @@ class Interface(Ui_Installer):
                                                             "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                             "li.checked::marker { content: \"\\2612\"; }\n"
                                                             "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-                                                            f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">{self.dialogs['content']['typeInstallationWidget']['pageInfoBoxTitle'][language]}</span></p>\n"
-                                                            f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    {self.dialogs['content']['typeInstallationWidget']['extraInfoInstallation'][language]}</p></body></html>",
+                                                            f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">"
+                                                            f"{self.dialogs['content']['typeInstallationWidget']['pageInfoBoxTitle'][language]}</span></p>\n"
+                                                            f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    "
+                                                            f"{self.dialogs['content']['typeInstallationWidget']['extraInfoInstallation'][language]}</p></body></html>",
                                                             None))
 
     def set_text_installation_type_info(self, installation_type, language):
@@ -87,14 +96,32 @@ class Interface(Ui_Installer):
                                                                     "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                                     "li.checked::marker { content: \"\\2612\"; }\n"
                                                                     "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-                                                                    f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{self.dialogs['content']['typeInstallationWidget'][f'{installation_type}'][language]}</p></body></html>",
+                                                                    f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                                                    f"{self.dialogs['content']['typeInstallationWidget'][f'{installation_type}'][language]}</p></body></html>",
                                                                     None))
+
+    def set_text_type_installation_label(self, language):
+        self.typeInstallationLabel.setText(QCoreApplication.translate("Installer",
+                                                                      f"{self.dialogs['content']['typeInstallationWidget']['typeInstallationLabel'][language]}",
+                                                                      None))
+
+    def set_text_type_installation_boxes(self, language):
+        self.defaultBox.setText(QCoreApplication.translate("Installer",
+                                                           f"{self.dialogs['content']['typeInstallationWidget']['typeInstallations']['default'][language]}",
+                                                           None))
+        self.teacherBox.setText(QCoreApplication.translate("Installer",
+                                                           f"{self.dialogs['content']['typeInstallationWidget']['typeInstallations']['teacher'][language]}",
+                                                           None))
+        self.advancedBox.setText(QCoreApplication.translate("Installer",
+                                                            f"{self.dialogs['content']['typeInstallationWidget']['typeInstallations']['advanced'][language]}",
+                                                            None))
 
     ############################## custom Installation Widget ##############################
 
     def setup_text_custom_installation_widget(self, language):
         self.set_text_info_box2(language)
         self.set_text_instructions(language)
+        self.set_text_select_components_label(language)
 
     def set_text_info_box2(self, language):
         self.pageInfoBox_2.setHtml(QCoreApplication.translate("Installer",
@@ -105,8 +132,10 @@ class Interface(Ui_Installer):
                                                               "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                               "li.checked::marker { content: \"\\2612\"; }\n"
                                                               "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">{self.dialogs['content']['customInstallationWidget']['pageInfoBoxTitle'][language]}</span></p>\n"
-                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    {self.dialogs['content']['customInstallationWidget']['extraInfoInstallation'][language]}</p></body></html>",
+                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">"
+                                                              f"{self.dialogs['content']['customInstallationWidget']['pageInfoBoxTitle'][language]}</span></p>\n"
+                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    "
+                                                              f"{self.dialogs['content']['customInstallationWidget']['extraInfoInstallation'][language]}</p></body></html>",
                                                               None))
 
     def set_text_instructions(self, language):
@@ -118,8 +147,14 @@ class Interface(Ui_Installer):
                                                           "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                           "li.checked::marker { content: \"\\2612\"; }\n"
                                                           "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{self.dialogs['content']['customInstallationWidget']['instructions'][language]}</p></body></html>",
+                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                                          f"{self.dialogs['content']['customInstallationWidget']['instructions'][language]}</p></body></html>",
                                                           None))
+
+    def set_text_select_components_label(self, language):
+        self.label.setText(QCoreApplication.translate("Installer",
+                                                      f"{self.dialogs['content']['customInstallationWidget']['selectComponentsLabel'][language]}",
+                                                      None))
 
     ############################## installation Widget ##############################
 
@@ -132,8 +167,10 @@ class Interface(Ui_Installer):
                                                               "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                               "li.checked::marker { content: \"\\2612\"; }\n"
                                                               "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">{self.dialogs['content']['installationWidget']['pageInfoBoxTitle'][language]}</span></p>\n"
-                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    {self.dialogs['content']['installationWidget']['extraInfoInstallation'][language]}</p></body></html>",
+                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">"
+                                                              f"{self.dialogs['content']['installationWidget']['pageInfoBoxTitle'][language]}</span></p>\n"
+                                                              f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">    "
+                                                              f"{self.dialogs['content']['installationWidget']['extraInfoInstallation'][language]}</p></body></html>",
                                                               None))
 
     def setup_tree_widget_items(self):
@@ -257,7 +294,8 @@ class Interface(Ui_Installer):
 
     def setup_text_finish_widget(self, language):
         self.titelLabel_2.setText(
-            QCoreApplication.translate("Installer", f"{self.dialogs['content']['finishWidget']['title']}", None))
+            QCoreApplication.translate("Installer", f"{self.dialogs['content']['finishWidget']['title'][language]}",
+                                       None))
         self.infoBox_3.setHtml(QCoreApplication.translate("Installer",
                                                           u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                           "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -266,9 +304,11 @@ class Interface(Ui_Installer):
                                                           "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                           "li.checked::marker { content: \"\\2612\"; }\n"
                                                           "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{self.dialogs['content']['finishWidget']['info_1'][language]}</p>\n"
+                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                                          f"{self.dialogs['content']['finishWidget']['info_1'][language]}</p>\n"
                                                           "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{self.dialogs['content']['finishWidget']['info_2'][language]}</p></"
+                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                                          f"{self.dialogs['content']['finishWidget']['info_2'][language]}</p></"
                                                           "body></html>", None))
 
     ############################## Buttons ##############################

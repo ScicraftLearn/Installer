@@ -1,5 +1,6 @@
 # contains all the functions that installs that executes/install all the downloaded files
 import os
+import subprocess
 
 import src.logic.utils as utils
 
@@ -11,8 +12,6 @@ def install_fabric(fabric_jar, version) -> None:
     :param version: The version of the release
     """
 
-    print("Installing fabric...")
-
     # Enclose the path with spaces in double quotes
     fabric_jar = f'"{fabric_jar}"'
 
@@ -20,7 +19,10 @@ def install_fabric(fabric_jar, version) -> None:
 
     # Install fabric
     command = f'java -jar {fabric_jar} client -mcversion {minecraft_version}'
-    os.system(command)
+    try:
+        subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
 
 
 def install_mod(mod, path, jar) -> None:
@@ -31,7 +33,6 @@ def install_mod(mod, path, jar) -> None:
     :param jar: The jar file to install the mod to
     """
 
-    print(f"Installing {mod}...")
     utils.move_contents(path, f"{utils.get_mods_folder()}/{jar}")
 
 
@@ -48,7 +49,7 @@ def install_mods(mods, temp_folder) -> None:
 
             jars = utils.extract_zip(path, temp_folder)
             for jar in jars:
-                install_mod(mod, temp_folder + jar, jar)
+                install_mod(jar, temp_folder + jar, jar)
         elif '.jar' in path:
             install_mod(mod, path, path.replace('\\', '/').split('/')[-1])
 
@@ -60,7 +61,6 @@ def install_map(map, path, root) -> None:
     :param path: The path to the map to install
     """
 
-    print(f"Installing {map}...")
     utils.move_contents(path, f"{utils.get_saves_folder()}/{root}")
 
 

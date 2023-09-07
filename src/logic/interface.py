@@ -1,5 +1,6 @@
 import sys
 
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QWidget
 
 import src.logic.utils as utils
@@ -35,6 +36,7 @@ class LogicInterface(QWidget):
         This method is used to setup the interface
         """
         self.ui.stackedWidget.setCurrentIndex(self.window_index)
+        self.ui.stackedWidget.currentChanged.connect(self.page_changed)
         self.setup_buttons()
         self.setup_type_installation_buttons()
 
@@ -69,7 +71,16 @@ class LogicInterface(QWidget):
 
     ############################## Click Methods ##############################
 
+    def page_changed(self):
+        """
+        This function is called when a page is changed.
+        It calls the installation method, but makes sure the widget is first switched to the installation page
+        """
+        if self.window_index == 3:
+            QTimer.singleShot(100, self.install)
+
     def click_next(self):
+
         if self.window_index + 1 < self.ui.stackedWidget.count():
             self.window_index += 1
             if not self.ui.advancedBox.isChecked() and self.window_index == 2:
@@ -87,8 +98,12 @@ class LogicInterface(QWidget):
 
         self.configure_buttons()
 
-    @staticmethod
-    def click_cancel():
+    def click_cancel(self):
+        if self.window_index == 3:
+            self.window_index += 1
+            self.ui.stackedWidget.setCurrentIndex(self.window_index)
+            self.configure_buttons()
+            return
         sys.exit(0)
 
     ############################## Configuration buttons ##############################
@@ -152,3 +167,106 @@ class LogicInterface(QWidget):
         self.ui.defaultBox.setChecked(False)
         self.ui.teacherBox.setChecked(False)
         self.ui.advancedBox.setChecked(False)
+
+    ############################## Installation methods ##############################
+
+    def install(self):
+        if self.window_index != 3:
+            return
+        install_type = self.check_installation_type()
+
+        if install_type is None:
+            return
+
+        components = self.get_installation_components(install_type)
+
+        if components is None:
+            return
+
+        for step in self.install_function(
+                components["version"],
+                components["mods"],
+                components["maps"],
+                components["install_fabric"]
+        ):
+            text, value = step
+            self.ui.progressBar.setValue(value)
+            self.ui.label_2.setText(text)
+
+        self.ui.CancelButton.setEnabled(True)
+
+    def check_installation_type(self):
+        if self.ui.defaultBox.isChecked():
+            return "default"
+
+        elif self.ui.teacherBox.isChecked():
+            return "teacher"
+
+        elif self.ui.advancedBox.isChecked():
+            return "advanced"
+
+        return None
+
+    def get_installation_components(self, install_type):
+        if install_type == "default":
+            return self.get_default_installation_components()
+
+        elif install_type == "teacher":
+            return self.get_teacher_installation_components()
+
+        elif install_type == "advanced":
+            return self.get_advanced_installation_components()
+
+        return None
+
+    def get_default_installation_components(self):
+        return {
+            "version": "latest",
+            "mods": ["minelabs", "dashboard-link"],
+            "maps": ["demo-world"],
+            "install_fabric": True
+        }
+
+    def get_teacher_installation_components(self):
+        return {
+            "version": "latest",
+            "mods": ["minelabs"],
+            "maps": ["demo-world"],
+            "install_fabric": True
+        }
+
+    def get_advanced_installation_components(self):
+        component_box = self.ui.componentBox
+
+        components = {
+            "version": "latest",
+            "mods": [],
+            "maps": [],
+            "install_fabric": False
+        }
+
+        for i in range(component_box.topLevelItemCount()):
+            item_version = component_box.topLevelItem(i)
+            version = item_version.text(0)
+            if '-release' in version:
+                version = version.replace('-release', '')
+
+            components["version"] = version
+            for j in range(item_version.childCount()):
+                item_type = item_version.child(j)
+                type = item_type.text(0)
+                for k in range(item_type.childCount()):
+                    item_component = item_type.child(k)
+                    component = item_component.text(0)
+                    if item_component.checkState(0) == Qt.Checked:
+                        if type == "mods":
+                            components["mods"].append(component)
+                        elif type == "maps":
+                            components["maps"].append(component)
+                if type == "fabric-installer" and item_type.checkState(0) == Qt.Checked:
+                    components["install_fabric"] = True
+
+            if len(components["mods"]) > 0 or len(components["maps"]) > 0 or components["install_fabric"]:
+                break
+
+        return components

@@ -16,8 +16,6 @@ def download_mod(mod, location, temp_folder) -> str:
     :return: The path to the downloaded zip file
     """
 
-    print(f"Downloading {mod}...")
-
     response = requests.get(location)
     extension = utils.get_mod_extension(mod)
 
@@ -56,8 +54,6 @@ def download_map(map, location, temp_folder) -> str:
     :param temp_folder: The path to the temporary folder
     :return: The path to the downloaded zip file
     """
-
-    print(f"Downloading {map}...")
 
     # TODO: uncomment this after fix
     # Commented out because the maps are not hosted on the internet
@@ -106,7 +102,6 @@ def download_fabric_installer(version, temp_folder) -> str:
     :return: The path to the downloaded zip file
     """
 
-    print(f"Downloading fabric installer...")
     response = requests.get(utils.get_fabric_installer(version))
 
     path = f"{temp_folder}fabric_installer.zip"
