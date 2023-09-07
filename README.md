@@ -9,7 +9,7 @@
 - [Running the code](#running-the-code)
 - [Creating an executable](#creating-an-executable)
     - [Note](#note)
-- [Adding a new content to the installer](#adding-a-new-content-to-the-installer)
+- [Adding new content to the installer](#adding-new-content-to-the-installer)
 - [Changing the dialogues in the GUI version](#changing-the-dialogues-in-the-gui-version)
 
 ## Introduction
@@ -99,7 +99,7 @@ Before creating an executable from the script version, you must first change the
 
 After this you can create an executable from the script version.
 
-## Adding a new content to the installer
+## Adding new content to the installer
 
 There is a config.json file provided. This file contains all the information about the content that can be installed.
 
