@@ -220,6 +220,12 @@ def delete_temporary_folder(temp_folder) -> None:
 
 
 def print_progress(text, value):
+    """
+    Prints the progress of the installation
+    :param text: the text to print
+    :param value: the value of the progress
+    """
+
     progress_length = 20
     filled_length = int(progress_length * value / 100)
 

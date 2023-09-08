@@ -7,12 +7,17 @@ import requests
 import src.logic.utils as utils
 
 
-# contains all the function that downloads specific content
+"""
+This file contains all the function that will be used for downloading content like
+    - mods
+    - maps
+    - fabric installer
+"""
 
-def download_mod(mod, location, temp_folder) -> str:
+
+def download_mod(location, temp_folder) -> str | None:
     """
     Downloads the mod and returns the path to the zip file
-    :param mod: The mod to download
     :param location: The location of the mod to download
     :param temp_folder: The path to the temporary folder
     :return: The path to the downloaded zip file
@@ -35,28 +40,35 @@ def download_mod(mod, location, temp_folder) -> str:
     return None
 
 
-def download_mods(mods, version, temp_folder) -> dict:
+def download_mods(mods, version, temp_folder) -> (bool, dict | str):
     """
     Downloads the mods for the specified version and returns the path to the zip file
     :param mods: The mods to download
     :param version: The version of the release of the mods to download
     :param temp_folder: The path to the temporary folder
-    :return: The path to the downloaded zip file
+    :return: a bool that indicates that the download went successful and a dict or string with the paths or error message.
     """
-    all_mods = utils.get_all_mods(version)
+    try:
+        all_mods = utils.get_all_mods(version)
 
-    downloaded_mods = {}
+        downloaded_mods = {}
 
-    for mod in all_mods:
-        if mod in mods:
-            m = download_mod(mod, all_mods[mod], temp_folder)
-            if m is not None:
-                downloaded_mods[mod] = m
+        for mod in all_mods:
+            if mod in mods:
+                # download the mod
+                m = download_mod(all_mods[mod], temp_folder)
 
-    return downloaded_mods
+                # If something went wrong, the mod will not be added to the downloaded mods
+                if m is not None:
+                    downloaded_mods[mod] = m
+
+        return True, downloaded_mods
+
+    except Exception as error:
+        return False, error
 
 
-def download_map(map, location, temp_folder) -> str:
+def download_map(map, location, temp_folder) -> str | None:
     """
     Downloads the map and returns the path to the zip file
     :param map: The map to download
@@ -69,10 +81,16 @@ def download_map(map, location, temp_folder) -> str:
     # Commented out because the maps are not hosted on the internet
     # response = requests.get(location)
     #
-    # path = f"{temp_folder}{map}.zip"
+    # if response.status_code == 200:
     #
-    # with open(path, "wb") as file:
-    #     file.write(response.content)
+    #   path = f"{temp_folder}{map}.zip"
+    #
+    #   with open(path, "wb") as file:
+    #       file.write(response.content)
+    #
+    #   return path
+    #
+    # return None
 
     # TODO: remove this after fix
     path = os.path.dirname(os.path.realpath(__file__)).replace("src\\logic", location)
@@ -85,38 +103,53 @@ def download_map(map, location, temp_folder) -> str:
     return path
 
 
-def download_maps(maps, version, temp_folder) -> dict:
+def download_maps(maps, version, temp_folder) -> (bool, dict | str):
     """
     Downloads the maps for the specified version and returns the path to the zip file
     :param maps: The maps to download
     :param version: The version of the release of the maps to download
     :param temp_folder: The path to the temporary folder
-    :return: The path to the downloaded zip file
+    :return: a bool that indicates that the download went successful and a dict or string with the paths or error message.
     """
-    all_maps = utils.get_all_maps(version)
 
-    downloaded_maps = {}
+    try:
+        all_maps = utils.get_all_maps(version)
 
-    for map in all_maps:
-        if map in maps:
-            downloaded_maps[map] = download_map(map, all_maps[map], temp_folder)
+        downloaded_maps = {}
 
-    return downloaded_maps
+        for map in all_maps:
+            if map in maps:
+
+                # download the map
+                m = download_map(map, all_maps[map], temp_folder)
+
+                # If something went wrong, the downloaded map cannot be added.
+                if m is not None:
+                    downloaded_maps[map] = m
+
+        return True, downloaded_maps
+
+    except Exception as error:
+        return False, error
 
 
-def download_fabric_installer(version, temp_folder) -> str:
+def download_fabric_installer(version, temp_folder) -> str | None:
     """
     Downloads the fabric installer from the fabric website
     :param version: The version of the fabric installer to download
     :param temp_folder: The path to the temporary folder
-    :return: The path to the downloaded zip file
+    :return: The path to the downloaded zip file or None if the request failed.
     """
 
     response = requests.get(utils.get_fabric_installer(version))
 
-    path = f"{temp_folder}fabric_installer.zip"
+    if response.status_code == 200:
 
-    with open(path, "wb") as file:
-        file.write(response.content)
+        path = f"{temp_folder}fabric_installer.zip"
 
-    return path
+        with open(path, "wb") as file:
+            file.write(response.content)
+
+        return path
+
+    return None

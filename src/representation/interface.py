@@ -9,7 +9,14 @@ from src.representation.ui_form import Ui_Installer
 # ####################################################################################################### #
 # To generate the ui_form.py file run the following command in the terminal in the representation folder: #
 # pyside6-uic form.ui -o ui_form.py                                                                       #
+#                                                                                                         #
+# This class is a subclass of the Ui_Installer class, this class is used to set up the interface          #
+# In this way, if changed made in gui we don't lose them when we generate the ui_form.py file             #
+# NOTE: if text style changes are made, you need te copy the html content from the ui_form.py file        #
+# and replace it with the content in this file. (No solution found for just changing the text in the html #
+# content)                                                                                                #
 # ####################################################################################################### #
+
 
 class Interface(Ui_Installer):
 
@@ -220,6 +227,8 @@ class Interface(Ui_Installer):
                 map_item.setCheckState(0, Qt.Unchecked)
 
         # Connects the itemChanged signal to the methods, for handling the checkboxes
+        # Function are mostly structured so every change will be done from the lowest child to the top
+        # because if using different orders, the changes will be overwritten
         self.componentBox.itemChanged.connect(self.select_tree_structure)
         self.componentBox.itemChanged.connect(self.remove_parent_check_if_no_checked_children)
         self.componentBox.itemChanged.connect(self.check_parent_if_all_children_checked)
@@ -309,6 +318,25 @@ class Interface(Ui_Installer):
                                                           "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
                                                           f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
                                                           f"{self.dialogs['content']['finishWidget']['info_2'][language]}</p></"
+                                                          "body></html>", None))
+
+    def setup_text_error_widget(self, language):
+        self.titelLabel_2.setText(
+            QCoreApplication.translate("Installer", f"{self.dialogs['content']['errorWidget']['title'][language]}",
+                                       None))
+        self.infoBox_3.setHtml(QCoreApplication.translate("Installer",
+                                                          u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                          "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+                                                          "p, li { white-space: pre-wrap; }\n"
+                                                          "hr { height: 1px; border-width: 0; }\n"
+                                                          "li.unchecked::marker { content: \"\\2610\"; }\n"
+                                                          "li.checked::marker { content: \"\\2612\"; }\n"
+                                                          "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                                          f"{self.dialogs['content']['errorWidget']['info_1'][language]}</p>\n"
+                                                          "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+                                                          f"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                                          f"{self.dialogs['content']['errorWidget']['info_2'][language]}</p></"
                                                           "body></html>", None))
 
     ############################## Buttons ##############################

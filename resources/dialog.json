@@ -91,6 +91,20 @@
         "dutch": "Klik op Voltooien om de Minelabs Setup Wizard af te sluiten.",
         "english": "Click Finish to exit the Minelabs Setup Wizard."
       }
+    },
+    "errorWidget": {
+      "title": {
+        "dutch": "Er trad een fout op tijdens de installatie",
+        "english": "An error occurred during installation"
+      },
+      "info_1": {
+        "dutch": "De Minelabs Setup Wizard heeft de vereiste Minelabs componenten niet kunnen installeren wegen een fout tijdens de installatie.",
+        "english": "Setup has failed to install the required Minelabs components due to an error."
+      },
+      "info_2": {
+        "dutch": "Klik op Voltooien om de Minelabs Setup Wizard af te sluiten.",
+        "english": "Click Finish to exit the Minelabs Setup Wizard."
+      }
     }
   },
   "navigation": {
