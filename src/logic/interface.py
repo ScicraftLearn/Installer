@@ -272,6 +272,10 @@ class LogicInterface(QWidget):
             # We change the text of the last page so the user knows something went wrong and go to that page
             self.ui.setup_text_error_widget(utils.get_dialog_language())
             self.ui.stackedWidget.setCurrentIndex(self.window_index)
+            # delete the temporary folder
+            utils.delete_temporary_folder(utils.create_temporary_folder())
+
+            # TODO: Does everything that was installed before the error occurred need to be deleted?
 
         self.ui.CancelButton.setEnabled(True)
         self.configure_buttons()
