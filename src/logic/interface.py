@@ -265,6 +265,7 @@ class LogicInterface(QWidget):
                 text, value = step
                 self.ui.progressBar.setValue(value)
                 self.ui.label_2.setText(text)
+                self.ui.CancelButton.setEnabled(True)
 
         except Exception as error:
             # If there occurred an error, we go to the error page
@@ -275,10 +276,8 @@ class LogicInterface(QWidget):
             # delete the temporary folder
             utils.delete_temporary_folder(utils.create_temporary_folder())
 
-            # TODO: Does everything that was installed before the error occurred need to be deleted?
-
-        self.ui.CancelButton.setEnabled(True)
-        self.configure_buttons()
+            self.ui.CancelButton.setEnabled(True)
+            self.configure_buttons()
 
     def check_installation_type(self):
         """
