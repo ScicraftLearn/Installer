@@ -219,6 +219,21 @@ def delete_temporary_folder(temp_folder) -> None:
     shutil.rmtree(temp_folder)
 
 
+def delete_files(files) -> None:
+    """
+    Deletes the files
+    :param files: The files to delete
+    """
+
+    for file in files:
+        # check if it is a folder
+        if os.path.isdir(file):
+            shutil.rmtree(file)
+        # check if it is a file
+        elif os.path.exists(file):
+            os.remove(file)
+
+
 def print_progress(text, value):
     """
     Prints the progress of the installation

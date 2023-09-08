@@ -10,22 +10,25 @@ This file contains all the functions for installing content like:
 """
 
 
-def install_mod(path, jar) -> None:
+def install_mod(path, jar) -> str:
     """
     Installs the mod
     :param path: The path to the mod to install
     :param jar: The jar file to install the mod to
     """
 
+    destination = f"{utils.get_mods_folder()}/{jar}"
     # Moves the jar of the mod from his current positions to the mods folder of Minecraft
-    utils.move_contents(path, f"{utils.get_mods_folder()}/{jar}")
+    utils.move_contents(path, destination)
+    return destination
 
 
-def install_mods(mods, temp_folder) -> (bool, str):
+def install_mods(mods, temp_folder, installed_content) -> (bool, str):
     """
     Installs the mods
     :param mods: The mods to install
     :param temp_folder: The path to the temporary folder
+    :param installed_content: The installed content
     :return (bool, string): bool indicates if the mods are successfully installed, the string shows the installation message.
     """
 
@@ -39,11 +42,13 @@ def install_mods(mods, temp_folder) -> (bool, str):
                 jars = utils.extract_zip(path, temp_folder)
                 # Installing the mods
                 for jar in jars:
-                    install_mod(temp_folder + jar, jar)
+                    destination = install_mod(temp_folder + jar, jar)
+                    installed_content.append(destination)
             # A jar extension is a mod, so we install it
             elif '.jar' in path:
                 jar = path.replace('\\', '/').split('/')[-1]
-                install_mod(path, jar)
+                destination = install_mod(path, jar)
+                installed_content.append(destination)
 
         return True, "Mods successfully installed!"
 
@@ -51,23 +56,29 @@ def install_mods(mods, temp_folder) -> (bool, str):
         return False, error
 
 
-def install_map(path, root) -> None:
+def install_map(path, root) -> str:
     """
     Installs the map
     :param path: The path to the map to install
     :param root: The root folder of the map
+    :return: The destination of the map
     """
+
+    destination = f"{utils.get_saves_folder()}/{root}"
 
     # We only neet to move the root folder, to the Minecraft saves folder,
     # because all the content in it will be automatically moved with it.
-    utils.move_contents(path, f"{utils.get_saves_folder()}/{root}")
+    utils.move_contents(path, destination)
+
+    return destination
 
 
-def install_maps(maps, temp_folder) -> (bool, str):
+def install_maps(maps, temp_folder, installed_content) -> (bool, str):
     """
     Installs the maps
     :param maps: The maps to install
     :param temp_folder: The path to the temporary folder
+    :param installed_content: The installed content
     :return (bool, string): bool indicates if the maps are successfully installed, the string shows the installation message.
     """
     try:
@@ -81,7 +92,8 @@ def install_maps(maps, temp_folder) -> (bool, str):
             root = map_folder[0].split('/', 1)[0]
 
             # Installing the map
-            install_map(temp_folder + root, root)
+            destination = install_map(temp_folder + root, root)
+            installed_content.append(destination)
 
         return True, "Maps successfully installed!"
 

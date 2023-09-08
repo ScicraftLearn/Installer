@@ -18,6 +18,9 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
     # Calculates the number of steps based on of mods, maps or fabric need to be installed
     number_of_steps = (2 if len(selected_mods) > 0 else 0) + (2 if len(selected_maps) > 0 else 0) + (2 if install_fabric else 0)
 
+    # The installed content
+    installed_content = []
+
     # If no steps, nothing is selected and the installation is done
     if number_of_steps == 0:
         yield "Nothing to install", 100
@@ -48,7 +51,7 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
             yield "Installing mods...", round(steps_completed / number_of_steps * 100)
 
             # installs the mods
-            successful, message = installer.install_mods(mods, temp_folder)
+            successful, message = installer.install_mods(mods, temp_folder, installed_content)
 
             if successful:
                 steps_completed += 1
@@ -56,11 +59,16 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
 
             # if the installation fails, send the error and stop the installation
             else:
-                raise message
+                # deletes the installed content
+                utils.delete_files(installed_content)
+                utils.delete_temporary_folder(temp_folder)
+                raise Exception(message)
 
         # Else yield the error message and stop the installation
         else:
-            raise mods
+            utils.delete_files(installed_content)
+            utils.delete_temporary_folder(temp_folder)
+            raise Exception(mods)
 
     if len(selected_maps) > 0:
 
@@ -80,7 +88,7 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
             yield "Installing maps...", round(steps_completed / number_of_steps * 100)
 
             # installs the maps
-            successful, message = installer.install_maps(maps, temp_folder)
+            successful, message = installer.install_maps(maps, temp_folder, installed_content)
 
             if successful:
                 steps_completed += 1
@@ -88,11 +96,16 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
 
             # if the installation fails, send the error and stop the installation
             else:
-                raise message
+                # deletes the installed content
+                utils.delete_files(installed_content)
+                utils.delete_temporary_folder(temp_folder)
+                raise Exception(message)
 
         # Else yield the error message and stop the installation
         else:
-            raise maps
+            utils.delete_files(installed_content)
+            utils.delete_temporary_folder(temp_folder)
+            raise Exception(maps)
 
     if install_fabric:
 
@@ -102,7 +115,10 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
         fabric_installer = downloader.download_fabric_installer(version, temp_folder)
 
         if fabric_installer is None:
-            raise "Failed to download the fabric installer."
+            # deletes the installed content
+            utils.delete_files(installed_content)
+            utils.delete_temporary_folder(temp_folder)
+            raise Exception("Failed to download the fabric installer.")
 
         steps_completed += 1
 
@@ -116,7 +132,10 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
             yield message, round(steps_completed / number_of_steps * 100)
 
         else:
-            raise message
+            # deletes the installed content
+            utils.delete_files(installed_content)
+            utils.delete_temporary_folder(temp_folder)
+            raise Exception(message)
 
     # deletes the temporary folder
     utils.delete_temporary_folder(temp_folder)

@@ -15,7 +15,7 @@ def script_version(settings):
             utils.print_progress(text, value)
     except Exception as error:
         # If something went wrong print the error message and set installation progress to zero
-        utils.print_progress(error, 0)
+        print(error)
 
 
 if __name__ == '__main__':
