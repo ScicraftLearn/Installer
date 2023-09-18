@@ -4,6 +4,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QWidget
 
 import src.logic.utils as utils
+import src.logic.delete as delete
 from src.representation.interface import Interface
 
 
@@ -254,6 +255,15 @@ class LogicInterface(QWidget):
             return
 
         try:
+
+            if components["delete"]:
+                all_mods = list(utils.get_all_mods(components["version"]).keys())
+                all_mods.append("fabric")
+
+                # deleting mods that exists
+                for mod in all_mods:
+                    delete.delete_mod(mod)
+
             # Install the components
             for step in self.install_function(
                     components["version"],
@@ -334,7 +344,8 @@ class LogicInterface(QWidget):
             "version": settings["version"],
             "mods": settings["mods"],
             "maps": settings["maps"],
-            "install_fabric": settings["fabric"]
+            "install_fabric": settings["fabric"],
+            "delete": True
         }
 
     @staticmethod
@@ -352,7 +363,8 @@ class LogicInterface(QWidget):
             "version": settings["version"],
             "mods": settings["mods"],
             "maps": settings["maps"],
-            "install_fabric": settings["fabric"]
+            "install_fabric": settings["fabric"],
+            "delete": True
         }
 
     def get_advanced_installation_components(self):
@@ -366,7 +378,8 @@ class LogicInterface(QWidget):
             "version": "latest",
             "mods": [],
             "maps": [],
-            "install_fabric": False
+            "install_fabric": False,
+            "delete": True
         }
 
         # Retrieve the components from the component box
@@ -378,6 +391,11 @@ class LogicInterface(QWidget):
             # If release is added to the version, remove it
             if '-release' in version:
                 version = version.replace('-release', '')
+
+            # If delete is in the name, set the delete variable based on it's checked or not
+            if "Delete" in version:
+                components["delete"] = item_version.checkState(0) == Qt.Checked
+                continue
 
             # Add the version to the components
             components["version"] = version

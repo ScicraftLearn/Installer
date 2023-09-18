@@ -226,6 +226,14 @@ class Interface(Ui_Installer):
                 map_item.setFlags(map_item.flags() | Qt.ItemIsUserCheckable)
                 map_item.setCheckState(0, Qt.Unchecked)
 
+        # A checkbox that can be checked or unchecked for deleting already installed mods
+        delete_mods_item = QTreeWidgetItem(self.componentBox)
+        # If changing the "Delete ... " text, also change the text in the remove_other_version_checkboxes method
+        # because there is and check with "Delete" in it.
+        delete_mods_item.setText(0, QCoreApplication.translate("Installer", f"Delete all previous installed mods", None))
+        delete_mods_item.setFlags(delete_mods_item.flags() | Qt.ItemIsUserCheckable)
+        delete_mods_item.setCheckState(0, Qt.Checked)
+
         # Connects the itemChanged signal to the methods, for handling the checkboxes
         # Function are mostly structured so every change will be done from the lowest child to the top
         # because if using different orders, the changes will be overwritten
@@ -280,6 +288,10 @@ class Interface(Ui_Installer):
         :param item: The item that was checked
         """
 
+        # If the delete checkbox is checked, the other checkboxes will not be removed
+        if "Delete" in item.text(0):
+            return
+
         # search parent of item
         parent = item
         while parent is not None:
@@ -290,7 +302,9 @@ class Interface(Ui_Installer):
         self.componentBox.blockSignals(True)
         for i in range(self.componentBox.topLevelItemCount()):
             other_version = self.componentBox.topLevelItem(i)
-            if other_version is not parent:
+
+            # Don't uncheck the Delete checkbox
+            if other_version is not parent and "Delete" not in other_version.text(0):
                 for j in range(other_version.childCount()):
                     child = other_version.child(j)
                     for k in range(child.childCount()):

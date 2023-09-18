@@ -1,10 +1,18 @@
 import time
 
+import src.logic.delete as delete
 from src.logic.installation import *
 
 
 def script_version(settings):
     try:
+
+        # deleting mods that exists
+        all_mods = list(utils.get_all_mods(settings["version"]).keys())
+        all_mods.append("fabric")
+        for mod in all_mods:
+            delete.delete_mod(mod)
+
         for step in run_installer(
                 settings["version"],  # release version
                 settings["mods"],  # mods to install
@@ -20,7 +28,7 @@ def script_version(settings):
 
 if __name__ == '__main__':
     try:
-        version = "latest"
+        version = "alpha"
         config = utils.get_config()
         settings_ = config["installer-settings"]["script_version"][version]
         script_version(settings_)
