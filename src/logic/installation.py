@@ -132,6 +132,14 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
             yield message, round(steps_completed / number_of_steps * 100)
 
         else:
+            from src.logic.fabric import install_client
+            successful = install_client("0.14.24", utils.get_minecraft_version(version))
+            message = "Success with Python"
+
+        if successful:
+            steps_completed += 1
+            yield message, round(steps_completed / number_of_steps * 100)
+        else:
             # deletes the installed content
             utils.delete_files(installed_content)
             utils.delete_temporary_folder(temp_folder)
