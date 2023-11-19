@@ -29,7 +29,7 @@ if __name__ == '__main__':
                     "alpha": "resources/maps/vAlpha/*.zip;resources/maps/vAlpha\\",
                     "latest": "resources/maps/vLatest/*.zip;resources/maps/vLatest\\"
                 }
-                r_version = "latest"
+                r_version = "alpha"
                 pyinstaller_command += f"script_version.py --name Minelabs-installer-{r_version} --add-data " \
                                        f"{data_versions[r_version]}"
                 subprocess.run(pyinstaller_command, check=True)

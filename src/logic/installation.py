@@ -24,6 +24,7 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
     # If no steps, nothing is selected and the installation is done
     if number_of_steps == 0:
         yield "Nothing to install", 100
+        return True
 
     steps_completed = 0
 

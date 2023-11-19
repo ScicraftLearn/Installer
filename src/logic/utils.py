@@ -234,6 +234,21 @@ def delete_files(files) -> None:
             os.remove(file)
 
 
+def get_files_in_folder(folder) -> list[str]:
+    """
+    Returns all the files in the folder
+    :param folder: The folder to get the files from
+    :return: All the files in the folder
+    """
+
+    files = []
+
+    for file in os.listdir(folder):
+        files.append(os.path.join(folder, file))
+
+    return files
+
+
 def print_progress(text, value):
     """
     Prints the progress of the installation
