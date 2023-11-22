@@ -53,7 +53,8 @@ def install_client(loader: str, game: str):
         # minecraft not yet installed
         os.makedirs(config.versionsdir)
 
-    profile_name = f"{config.loader_name}-{loader}-{game}"
+    #profile_name = f"{config.loader_name}-{loader}-{game}"
+    profile_name = "Minelabs"
     profile_dir = os.path.join(config.versionsdir, profile_name)
 
     if os.path.exists(profile_dir):
@@ -75,6 +76,7 @@ def install_client(loader: str, game: str):
         return
 
     with open(profile_json, "w") as json_file:
+        meta_json_loader_game["id"] = profile_name
         json.dump(meta_json_loader_game, json_file)
 
     with open(profile_jar, 'wb') as file:
@@ -123,7 +125,7 @@ def install_client(loader: str, game: str):
         profile_data = json.load(json_file)
     if 'profiles' not in profile_data:
         profile_data['profiles'] = {}
-    profile_nam = f"Minelabs-{game}"
+    profile_nam = f"Minelabs"
     if profile_nam not in profile_data["profiles"]:
         profile_data["profiles"][profile_nam] = {
             "name": profile_name,

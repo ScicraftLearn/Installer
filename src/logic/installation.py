@@ -112,39 +112,40 @@ def run_installer(version, selected_mods, selected_maps, install_fabric=True):
 
         yield "Downloading fabric...", round(steps_completed / number_of_steps * 100)
 
-        # Downloads the fabric installer and returns the path to the zip file
-        fabric_installer = downloader.download_fabric_installer(version, temp_folder)
-
-        if fabric_installer is None:
-            # deletes the installed content
-            utils.delete_files(installed_content)
-            utils.delete_temporary_folder(temp_folder)
-            raise Exception("Failed to download the fabric installer.")
-
-        steps_completed += 1
-
-        yield "Installing fabric...", round(steps_completed / number_of_steps * 100)
-
-        # installs fabric
-        successful, message = installer.install_fabric(fabric_installer, version)
+        from src.logic.fabric import install_client
+        successful = install_client("0.14.24", utils.get_minecraft_version(version))
+        message = "Success with Python" if successful is not None else "Not successfull with Python, doing java"
 
         if successful:
             steps_completed += 1
-            yield message, round(steps_completed / number_of_steps * 100)
-
-        else:
-            from src.logic.fabric import install_client
-            successful = install_client("0.14.24", utils.get_minecraft_version(version))
-            message = "Success with Python"
-
-        if successful:
+            yield "Installing fabric...", round(steps_completed / number_of_steps * 100)
             steps_completed += 1
             yield message, round(steps_completed / number_of_steps * 100)
         else:
-            # deletes the installed content
-            utils.delete_files(installed_content)
-            utils.delete_temporary_folder(temp_folder)
-            raise Exception(message)
+            # Downloads the fabric installer and returns the path to the zip file
+            fabric_installer = downloader.download_fabric_installer(version, temp_folder)
+
+            if fabric_installer is None:
+                # deletes the installed content
+                utils.delete_files(installed_content)
+                utils.delete_temporary_folder(temp_folder)
+                raise Exception("Failed to download the fabric installer.")
+
+            steps_completed += 1
+
+            yield "Installing fabric...", round(steps_completed / number_of_steps * 100)
+
+            # installs fabric
+            successful, message = installer.install_fabric(fabric_installer, version)
+
+            if successful:
+                steps_completed += 1
+                yield message, round(steps_completed / number_of_steps * 100)
+            else:
+                # deletes the installed content
+                utils.delete_files(installed_content)
+                utils.delete_temporary_folder(temp_folder)
+                raise Exception(message)
 
     # deletes the temporary folder
     utils.delete_temporary_folder(temp_folder)
