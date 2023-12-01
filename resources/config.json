@@ -50,8 +50,8 @@
   },
   "maps": {
     "demo-world": {
-        "alpha": "resources/maps/vAlpha/demo-world.zip",
-        "latest": "resources/maps/vLatest/demo-world.zip"
+        "alpha": "resources/maps/vAlpha/Minelabs-labo.zip",
+        "latest": "resources/maps/vLatest/Minelabs-labo-1.19.4.zip"
     }
   },
   "minecraft-versions": {
