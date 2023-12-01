@@ -19,13 +19,13 @@
       "default": {
         "version": "latest",
         "mods": ["minelabs", "dashboard-link"],
-        "maps": ["demo-world"],
+        "maps": ["demo-world","worksheet-world"],
         "fabric": true
       },
       "teacher": {
         "version": "latest",
         "mods": ["minelabs"],
-        "maps": ["demo-world"],
+        "maps": ["demo-world","worksheet-world"],
         "fabric": true
       }
     }
@@ -52,6 +52,9 @@
     "demo-world": {
         "alpha": "resources/maps/vAlpha/Minelabs-labo.zip",
         "latest": "resources/maps/vLatest/Minelabs-labo-1.19.4.zip"
+    },
+    "worksheet-world": {
+      "latest": "resources/maps/vLatest/Minelabs-eiland.zip"
     }
   },
   "minecraft-versions": {
