@@ -38,6 +38,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ "3.10" ]
+    environment: minelabs_upload
     needs: [ build ]
     steps:
       - uses: actions/checkout@v3
@@ -58,7 +59,7 @@ jobs:
           echo $INSTALLER_VERSION >> dist/version
       - uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.t }}
+          ssh-private-key: ${{ secrets.PRIVATE_MINELABS_KEY  }}
       - name: Upload to Minelabs-server
         run: ./.github/scripts/sftp_upload.sh
         shell: bash
