@@ -1,4 +1,5 @@
 {
+  "installer_version": "1.0.1",
   "versions": ["alpha", "latest"],
   "installer-settings": {
     "script_version": {

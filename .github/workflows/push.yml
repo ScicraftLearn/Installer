@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_installer:
+  build:
     name: Build on ${{ matrix.os }} with Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -27,7 +27,32 @@ jobs:
       - name: Build with python
         timeout-minutes: 4
         run: python.exe .\generate.py interface
+      - name: Obtain installer version
+        run: |
+          INSTALLER_VERSION=$(python -c "import json;jf=open('resources/config.json','r');print(json.load(jf)['installer_version']);jf.close()")
+          echo $INSTALLER_VERSION >> dist/version
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          path: dist/*.exe
+          path: dist/*
+
+  upload:
+    name: Upload on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    needs: [ build ]
+    if: github.ref == 'refs/head/main'
+    steps:
+      - name: Download artefacts
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
+      - uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.PRIVATE_MINELABS_KEY }}
+      - name: Upload to Minelabs-server
+        run: ./.github/scripts/sftp_upload.sh
+        shell: bash
