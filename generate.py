@@ -12,7 +12,7 @@ if __name__ == '__main__':
     elif number_of_arguments == 2:
         version = sys.argv[1]
 
-        pyinstaller_command = "py -m PyInstaller --onefile --icon=resources/images/minelabs-logo.ico" \
+        pyinstaller_command = "python -m PyInstaller --onefile --icon=resources/images/minelabs-logo.ico" \
                               " --add-data resources/*.json;resources "
 
         try:

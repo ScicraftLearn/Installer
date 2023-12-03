@@ -1,4 +1,4 @@
-py -m venv ./venv
+python -m venv ./venv
 call ./venv/Scripts/activate
-py -m pip install -r requirements.txt
+python -m pip install -r requirements.txt
 
