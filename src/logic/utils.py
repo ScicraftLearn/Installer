@@ -4,6 +4,8 @@ import shutil
 import sys
 import zipfile
 
+import src.logic.config as iconfig
+
 
 def get_data_file_path(filename):
     """
@@ -59,18 +61,26 @@ def get_logo(extension) -> str:
     return get_data_file_path(f"resources/images/minelabs-logo.{extension}")
 
 
+def get_name_folder(name: str = "") -> str:
+    """
+    Make and return the path to the right folder 'name' in the .minecraft-folder
+    :param name: The name in the .minecraft)folder
+    :return: The path to the folder
+    """
+    # check if folder exists
+    mod_path = os.path.join(iconfig.mcdir, name)
+    if not os.path.exists(mod_path):
+        # create folder
+        os.makedirs(mod_path)
+    return mod_path
+
+
 def get_mods_folder() -> str:
     """
     Returns the location of the mods folder
     :return: The location of the mods folder
     """
-
-    # check if mods folder exists
-    if not os.path.exists(os.path.join(os.getenv("APPDATA"), ".minecraft", "mods")):
-        # create mods folder
-        os.makedirs(os.path.join(os.getenv("APPDATA"), ".minecraft", "mods"))
-
-    return os.path.join(os.getenv("APPDATA"), ".minecraft", "mods")
+    return get_name_folder("mods")
 
 
 def get_saves_folder() -> str:
@@ -78,7 +88,7 @@ def get_saves_folder() -> str:
     Returns the location of the saves folder
     :return: The location of the saves folder
     """
-    return os.path.join(os.getenv("APPDATA"), ".minecraft", "saves")
+    return get_name_folder("saves")
 
 
 def extract_zip(zip_file, temp_folder) -> list[str]:
@@ -200,7 +210,7 @@ def create_temporary_folder() -> str:
     """
 
     # Get the temp folder location
-    temp_folder = os.path.dirname(os.path.realpath(__file__)) + "\\temp\\"
+    temp_folder = os.path.join(os.path.dirname(os.path.realpath(__file__)), "temp")
 
     # Check if the temp folder exists and create it if it doesn't
     if not os.path.exists(temp_folder):

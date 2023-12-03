@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 import src.logic.utils as utils
 
@@ -17,7 +18,7 @@ def install_mod(path, jar) -> str:
     :param jar: The jar file to install the mod to
     """
 
-    destination = f"{utils.get_mods_folder()}/{jar}"
+    destination = os.path.join(utils.get_mods_folder(), jar)
     # Moves the jar of the mod from his current positions to the mods folder of Minecraft
     utils.move_contents(path, destination)
     return destination
@@ -42,11 +43,11 @@ def install_mods(mods, temp_folder, installed_content) -> (bool, str):
                 jars = utils.extract_zip(path, temp_folder)
                 # Installing the mods
                 for jar in jars:
-                    destination = install_mod(temp_folder + jar, jar)
+                    destination = install_mod(os.path.join(temp_folder, jar), jar)
                     installed_content.append(destination)
             # A jar extension is a mod, so we install it
             elif '.jar' in path:
-                jar = path.replace('\\', '/').split('/')[-1]
+                jar = path.replace(os.path.sep, '/').split('/')[-1]
                 destination = install_mod(path, jar)
                 installed_content.append(destination)
 
@@ -64,7 +65,7 @@ def install_map(path, root) -> str:
     :return: The destination of the map
     """
 
-    destination = f"{utils.get_saves_folder()}/{root}"
+    destination = os.path.join(utils.get_saves_folder(), root)
 
     # We only neet to move the root folder, to the Minecraft saves folder,
     # because all the content in it will be automatically moved with it.
@@ -92,7 +93,7 @@ def install_maps(maps, temp_folder, installed_content) -> (bool, str):
             root = map_folder[0].split('/', 1)[0]
 
             # Installing the map
-            destination = install_map(temp_folder + root, root)
+            destination = install_map(os.path.join(temp_folder, root), root)
             installed_content.append(destination)
 
         return True, "Maps successfully installed!"

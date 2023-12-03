@@ -126,14 +126,13 @@ def install_client(loader: str, game: str):
     if 'profiles' not in profile_data:
         profile_data['profiles'] = {}
     profile_nam = f"Minelabs"
-    if profile_nam not in profile_data["profiles"]:
-        profile_data["profiles"][profile_nam] = {
-            "name": profile_name,
-            "type": "custom",
-            "created": datetime.utcnow().isoformat(),
-            "lastUsed": datetime.utcnow().isoformat(),
-            "icon": config.png_data
-        }
+    profile_data["profiles"][profile_nam] = {
+        "name": profile_name,
+        "type": "custom",
+        "created": datetime.utcnow().isoformat(),
+        "lastUsed": datetime.utcnow().isoformat(),
+        "icon": config.png_data
+    }
     profile_data["profiles"][profile_nam]["lastVersionId"] = profile_name
     with open(launcherprofilespath, "w") as json_file:
         json.dump(profile_data, json_file)

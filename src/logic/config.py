@@ -1,5 +1,6 @@
 """ Configurations for the installation"""
 import os
+import platform
 
 # Fabric and Maven
 
@@ -11,7 +12,16 @@ loader_version_meta = "v2/versions/loader"
 
 loader_name = "fabric-loader"
 
-mcdir = os.path.join(os.getenv("APPDATA"), ".minecraft")
+if platform == "Darwin":  # MacOS
+    mcdir = os.path.join(os.path.expanduser("~"), "Library/Application Support", ".minecraft")
+elif platform == "Linux": # Linux
+    mcdir = os.path.join(os.path.expanduser("~"), ".minecraft")
+else:  # platform == "Windows"
+    mcdir = os.path.join(os.getenv("APPDATA"), ".minecraft")
+
+if not os.path.exists(mcdir):
+    os.makedirs(mcdir)
+
 versionsdir = os.path.join(mcdir, "versions")
 lidsdir = os.path.join(mcdir, "libraries")
 
