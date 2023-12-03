@@ -34,7 +34,7 @@
   "mods": {
     "minelabs": {
       "alpha": "https://github.com/ScicraftLearn/Minelabs/releases/download/alpha-1.0.0/files.zip",
-      "latest": "https://download.minelabs.be/mod/latests/mod.zip"
+      "latest": "https://download.minelabs.be/mod/latest/mod.zip"
     },
     "dashboard-link": {
       "alpha": "https://github.com/ScicraftLearn/Dashboard-Link/releases/download/v0.1.0/dashboard-link-1.0.0.jar",
@@ -55,7 +55,7 @@
         "latest": "resources/maps/vLatest/Minelabs-labo-1.19.4.zip"
     },
     "worksheet-world": {
-         "latest": "https://download.minelabs.be/map/anvers/latests/anvers.zip"
+         "latest": "https://download.minelabs.be/map/anvers/latest/anvers.zip"
     }
   },
   "minecraft-versions": {
