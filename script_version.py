@@ -28,7 +28,7 @@ def script_version(settings):
 
 if __name__ == '__main__':
     try:
-        version = "alpha"
+        version = "latest"
         config = utils.get_config()
         settings_ = config["installer-settings"]["script_version"][version]
         script_version(settings_)
